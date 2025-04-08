@@ -1,46 +1,38 @@
 import { check } from "express-validator";
+import { AppError } from "../../utils/index.js";
+import mongoose from "mongoose";
+import { INVALID_PARENT_ID } from "../constants/errorCodes.js";
 
 
-export const SchemaValidationForSignup = [
-      check("email")
-            .notEmpty()
-            .withMessage("Email is mandatory")
-            .isEmail()
-            .withMessage("Invalid email address")
-            .normalizeEmail(),
 
 
-      //name ,check validity
-      check("name")
+export const SchemaValidationForVersion = [
+
+      check("documentId")
+            .optional()
+            .custom((id) => {
+                  if (!mongoose.isValidObjectId(id)) {
+                        throw new AppError(INVALID_PARENT_ID, "Invalid Document ID", 400);
+                  }
+                  return true;
+            }),
+
+
+      check("versionNumber")
             .trim()
             .notEmpty()
-            .withMessage("Name is mandatory"),
+            .withMessage("Version Number is mandatory"),
 
 
-      // password, check validity
-      check("password")
-            .trim()
+      check("fileUrl")
             .notEmpty()
-            .withMessage("Password is mandatory")
-            .isLength({ min: 6 })
-            .withMessage("Password should be of minimum 6 character"),
-
-]
-
-
-export const SchemaValidationForLogin = [
-      check("email")
-            .notEmpty()
-            .withMessage("Email is mandatory")
-            .isEmail()
-            .withMessage("Invalid email address")
-            .normalizeEmail(),
+            .withMessage("File Url is required")
+            .bail()
+            .isURL({
+                  require_protocol: true,
+            })
+            .withMessage("Invalid URL format")
 
 
-      // password, check validity
-      check("password")
-            .trim()
-            .notEmpty()
-            .withMessage("Password is mandatory")
 
 ]

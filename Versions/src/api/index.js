@@ -1,4 +1,4 @@
-import UsersRouter from "./user.route.js";
+import VersionRouter from "./version.route.js";
 import ErrorHandler from "./middlewares/errorHandler.js";
 
-export { UsersRouter, ErrorHandler };
+export { VersionRouter, ErrorHandler };

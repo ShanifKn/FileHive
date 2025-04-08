@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { ErrorHandler, FolderRouter } from "./api/index.js";
+import { DocumentRouter, ErrorHandler, FolderRouter } from "./api/index.js";
 
 const ExpressApp = async (app) => {
       app.use(express.json());
@@ -8,6 +8,8 @@ const ExpressApp = async (app) => {
       app.use(cors());
 
       FolderRouter(app);
+
+      DocumentRouter(app)
 
       app.use(ErrorHandler);
 };

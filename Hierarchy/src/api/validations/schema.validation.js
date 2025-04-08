@@ -13,13 +13,13 @@ export const SchemaValidationForFolder = [
 
       // parentFolder: Optional, must be valid ObjectId if provided
       check("parentFolder")
-      .optional()
-      .custom((id) => {
-          if (!mongoose.isValidObjectId(id)) {
-              throw new AppError(INVALID_PARENT_ID, "Invalid Parent ID", 400);
-          }
-          return true;
-      }),
+            .optional()
+            .custom((id) => {
+                  if (!mongoose.isValidObjectId(id)) {
+                        throw new AppError(INVALID_PARENT_ID, "Invalid Parent ID", 400);
+                  }
+                  return true;
+            }),
 ];
 
 
@@ -31,3 +31,30 @@ export const SchemaValidationForFolderUpdate = [
             .withMessage("Folder name is mandatory"),
 
 ];
+
+
+export const SchemaValidationForDocument = [
+
+      // Title: Required, Trimmed
+      check("title")
+            .trim()
+            .notEmpty()
+            .withMessage("Document title is mandatory"),
+
+      // Content: Optional, but if provided, should be a string
+      check("content")
+            .optional()
+            .isString()
+            .withMessage("Content must be a string"),
+
+
+      check("folder")
+            .optional()
+            .custom((id) => {
+                  if (!mongoose.isValidObjectId(id)) {
+                        throw new AppError(INVALID_PARENT_ID, "Invalid Parent ID", 400);
+                  }
+                  return true;
+            }),
+
+]

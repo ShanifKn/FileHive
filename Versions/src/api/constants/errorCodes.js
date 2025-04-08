@@ -1,15 +1,5 @@
-export const USER_ALREADY_EXISTS = 1001;
-
-export const USER_NOT_FOUND = 1002;
-
-export const PASSWORD_MISSMATCHED = 1004;
+export const INVALID_PARENT_ID = 3001;
 
 export const TOKEN_VERIFICATION_FAIL = 1007;
 
-export const HASH_NOT_FOUND = 1008;
-
 export const TOKEN_NOT_FOUND = 1009;
-
-export const SELLER_TOKEN_VERIFICATION_FAIL = 1010;
-
-export const EMAIL_MISSMATCHED = 1004;
