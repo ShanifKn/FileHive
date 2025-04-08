@@ -1,0 +1,38 @@
+{
+  "name": "filehive",
+  "version": "1.0.0",
+  "description": "File Management System API is a Node.js microservices-based backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=prod node src/index.js",
+    "dev": "NODE_ENV=dev node --watch src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShanifKn/FileHive.git"
+  },
+  "author": "shanif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShanifKn/FileHive/issues"
+  },
+  "homepage": "https://github.com/ShanifKn/FileHive#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "mongoose": "^8.13.2",
+    "path": "^0.12.7",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
+  },
+  "type": "module"
+}
