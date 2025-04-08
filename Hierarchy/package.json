@@ -4,6 +4,8 @@
   "description": "File Management System API is a Node.js microservices-based backend",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV=prod node src/index.js",
+    "dev": "NODE_ENV=dev node --watch src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,5 +33,6 @@
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "winston-mongodb": "^6.0.0"
-  }
+  },
+  "type": "module"
 }
