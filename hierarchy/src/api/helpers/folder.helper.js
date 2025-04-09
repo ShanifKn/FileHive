@@ -77,7 +77,7 @@ class FolderHelper {
 
 
   async DeleteFolder({ folderId }) {
-    const childFolders = await this.helper.DeleteFolderAndChildren({ folderId })
+    const childFolders = await this.repository.DeleteFolderAndChildren({ folderId })
 
     for (const child of childFolders) {
       await this.repository.DeleteFolder({ folderId: child._id })

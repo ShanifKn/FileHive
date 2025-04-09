@@ -13,7 +13,7 @@ const DocumentRouter = (app) => {
   const service = new DocumentService();
 
   // @route   POST /documents
-  // @desc    Create a new document (placeholder, no file)
+  // @desc    Create a new document
   // @access  Private
   app.post(
     "/documents",
@@ -124,7 +124,7 @@ const DocumentRouter = (app) => {
 
       await service.DeleteDocumentAndVersions({documentId, token: req.header("x-auth-token") });
 
-      return res.status(200).json({ message: "Success message." });
+      return res.status(200).json({ message: "Document deleted." });
     })
   );
 
