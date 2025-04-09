@@ -6,9 +6,9 @@ const DocumentSchema = new mongoose.Schema({
 
       content: { type: String },
 
-      folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: false },
+      folder: { type: mongoose.Schema.Types.ObjectId, ref: 'folder', required: false },
 
-      createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+      createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
 
     }, { timestamps: true });
     

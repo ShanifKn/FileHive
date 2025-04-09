@@ -26,9 +26,46 @@ class DocumentHelper {
 
             if (!response.ok) throw new AppError(VERSION_UPLOAD_FAIL, "Version update failed", 401);
 
-            const data = await response.json()
+            const data = await response.json();
 
             return data;
+      }
+
+      async GetAllVersions({ documentId, token }) {
+            const response = await fetch(`${BASE_URL}/versions/${documentId}`, {
+                  method: "GET",
+                  headers: {
+                        "Content-Type": "application/json",
+                        "x-auth-token": token,
+                  },
+            });
+
+            if (!response.ok) throw new AppError(VERSION_UPLOAD_FAIL, "Version Connection failed", 401);
+
+            const data = await response.json();
+
+            return data;
+      }
+
+      async DeleteDocumentAndVersions({ documentId, token }) { }
+
+      async UpdateDocument({ documentId, title, content }) {
+            await this.repostory.UpdateDocumentById(documentId, {
+                  ...(title && { title }),
+                  ...(content && { content }),
+            });
+
+            return { message: " Updated document details." };
+      }
+
+      async GetDocumentDetail({ documentId }) {
+            return await this.repostory.GetDocumentDetail({ documentId });
+      }
+
+      async countDocuments({ userId }) {
+            const data = await this.repostory.countDocuments({ userId });
+
+            return { totalDocuments: data }
       }
 }
 

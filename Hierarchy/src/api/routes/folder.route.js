@@ -79,6 +79,26 @@ const FolderRouter = (app) => {
       return res.status(200).json({ data });
     })
   );
+
+
+
+  // @route   GET /filter
+  // @desc    Get Search term to filter documents by title or content.
+  // @access  Private
+  app.get(
+    "/filter",
+    Authentication,
+    Validate,
+    tryCatch(async (req, res) => {
+
+      const { search } = req.query;
+
+      const data = await service.GetSearchQuery({ search });
+
+      return res.status(200).json({ data });
+    })
+  );
+
 };
 
 export default FolderRouter;
