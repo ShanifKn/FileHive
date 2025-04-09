@@ -1,0 +1,57 @@
+version: "3"
+services:
+  user:
+    build:
+      dockerfile: Dockerfile
+      context: ./user
+    container_name: user
+    ports:
+      - "8001:8001"
+    restart: always
+    volumes:
+      - .:/app/
+      - /app/user/node_modules
+    env_file:
+      - ./user/.env
+
+  hierarchy:
+    build:
+      dockerfile: Dockerfile
+      context: ./hierarchy
+    container_name: hierarchy
+    ports:
+      - "8002:8002"
+    restart: always
+    volumes:
+      - .:/app/
+      - /app/hierarchy/node_modules
+    env_file:
+      - ./hierarchy/.env
+
+  versions:
+    build:
+      dockerfile: Dockerfile
+      context: ./versions
+    container_name: versions
+    ports:
+      - "8003:8003"
+    restart: always
+    volumes:
+      - .:/app/
+      - /app/versions/node_modules
+    env_file:
+      - ./versions/.env
+
+
+  nginx-proxy:
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    depends_on:
+      - user
+      - hierarchy
+      - versions
+
+
+    ports:
+      - 80:80

@@ -56,10 +56,16 @@ class DocumentService {
   }
 
   async DeleteDocumentAndVersions({ documentId, token }) {
-    return await this.helper.DeleteDocumentAndVersions({
+    await this.helper.DeleteDocumentFromVersions({
       documentId,
       token,
     });
+
+    return await this.helper.DeleteDocument({ documentId })
+  }
+
+  async FindDocumentByFolder({ folderId }) {
+    return await this.helper.FindDocumentByFolder({ folderId })
   }
 
   async UpdateDocument({ documentId, title, content }) {

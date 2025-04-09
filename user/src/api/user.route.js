@@ -7,86 +7,82 @@ import { SchemaValidationForLogin, SchemaValidationForSignup } from "./validatio
 import Validate from "./validations/validator.js";
 
 const UsersRouter = (app) => {
+  const userExists = new UserExist();
 
-      const userExists = new UserExist();
+  const service = new UserService();
 
-      const service = new UserService();
+  // @route   GET /
+  // @des     For health check
+  // @access  Public
+  app.get(
+    "",
+    tryCatch(async (req, res) => {
+      return res.status(200).json("Running");
+    })
+  );
 
-      // @route   GET /
-      // @des     For health check
-      // @access  Public
-      app.get(
-            "",
-            tryCatch(async (req, res) => {
-                  return res.status(200).json("Running");
-            })
-      );
+  // @route  POST /signup
+  // @des    New user signup
+  // @access Public
+  // @fields name, email, password
+  app.post(
+    "/signup",
+    SignupRateLimiter,
+    SchemaValidationForSignup,
+    Validate,
+    tryCatch(async (req, res) => {
+      const { name, email, password } = req.body;
 
-      // @route  POST /signup
-      // @des    New user signup
-      // @access Public
-      // @fields name, email, password
-      app.post(
-            "/signup",
-            SignupRateLimiter,
-            SchemaValidationForSignup,
-            Validate,
-            tryCatch(async (req, res) => {
-                  const { name, email, password } = req.body;
+      //check if the user  already exist with given email
+      await userExists.ForSignUp({ name, email, password });
 
-                  //check if the user  already exist with given email
-                  await userExists.ForSignUp({ name, email, password });
+      //create a new user
+      const { message } = await service.CreateNewUser({
+        name,
+        email,
+        password,
+      });
 
-                  //create a new user
-                  const { message } = await service.CreateNewUser({
-                        name,
-                        email,
-                        password,
-                  });
+      return res.status(201).json({ message });
+    })
+  );
 
-                  return res.status(201).json({ message });
-            })
-      );
+  // @route   POST /login
+  // @desc    user login
+  // @access  Public
+  // @fields  email ,password
+  app.post(
+    "/login",
+    LoginRateLimiter,
+    SchemaValidationForLogin,
+    Validate,
+    tryCatch(async (req, res) => {
+      const { email, password } = req.body;
 
+      //Check if user already exists with given email and role
+      await userExists.ForLogin({ email });
 
-      // @route   POST /login
-      // @desc    user login
-      // @access  Public
-      // @fields  email ,password
-      app.post(
-            "/login",
-            LoginRateLimiter,
-            SchemaValidationForLogin,
-            Validate,
-            tryCatch(async (req, res) => {
-                  const { email, password } = req.body;
+      const { message, token } = await service.UserLogin({ email, password });
 
-                  //Check if user already exists with given email and role
-                  await userExists.ForLogin({ email });
+      return res.status(200).json({ message, token });
+    })
+  );
 
-                  const { message, token } = await service.UserLogin({ email, password });
+  //@route GET /profile
+  // @desc  get user  profile
+  // @access  Private
+  app.get(
+    "/profile",
+    Authentication,
+    Validate,
+    tryCatch(async (req, res) => {
+      const _id = req.user._id;
 
-                  return res.status(200).json({ message, token });
-            })
-      );
+      const data = await service.FindUserById({ _id });
 
-
-      //@route GET /profile
-      // @desc  get user  profile
-      // @access  Private
-      app.get(
-            "/profile",
-            Authentication,
-            Validate,
-            tryCatch(async (req, res) => {
-                  const _id = req.user._id;
-
-                  const data = await service.FindUserById({ _id });
-
-                  return res.status(200).json({ data });
-            })
-      );
-
+      return res.status(200).json({ data });
+    })
+  );
 };
 
 export default UsersRouter;

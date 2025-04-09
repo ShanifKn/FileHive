@@ -99,6 +99,49 @@ const FolderRouter = (app) => {
     })
   );
 
+
+  // @route   GET /viewstore/:folderId
+  // @desc    Get contents of a folder: subfolders + documents
+  // @access  Private
+  app.get(
+    "/viewstore/:folderId",
+    Authentication,
+    Validate,
+    tryCatch(async (req, res) => {
+
+      const folderId = req.params.folderId;
+
+      const userId = req.user._id;
+
+      await existCheck.ForFolder({ _id: folderId });
+
+      const data = await service.GetFolderDetails({ folderId, userId });
+
+      return res.status(200).json({ data });
+    })
+  );
+
+
+  // @route   DELETE /folders/:id
+  // @desc    Delete a folder by ID
+  // @access  Private
+  app.delete(
+    "/folders/:id",
+    Authentication,
+    Validate,
+    tryCatch(async (req, res) => {
+
+      const folderId = req.params.id;
+
+      await existCheck.ForFolder({ _id: folderId });
+
+      await service.DeleteFolder({ folderId })
+
+      return res.status(200).json({ message: "Folder deleted successfully." });
+    })
+  );
+
+
 };
 
 export default FolderRouter;

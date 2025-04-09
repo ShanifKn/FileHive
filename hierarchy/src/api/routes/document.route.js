@@ -122,12 +122,9 @@ const DocumentRouter = (app) => {
 
       await existCheck.ForDocument({ _id: documentId });
 
-      await service.DeleteDocumentAndVersions({
-        documentId,
-        token: req.header("x-auth-token"),
-      });
+      await service.DeleteDocumentAndVersions({documentId, token: req.header("x-auth-token") });
 
-      return res.status(200).json({ message: "Document and all versions deleted successfully." });
+      return res.status(200).json({ message: "Success message." });
     })
   );
 

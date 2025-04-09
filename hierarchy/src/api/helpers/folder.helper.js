@@ -23,21 +23,15 @@ class FolderHelper {
     return await this.repository.GetUserFolder({ userId });
   }
 
-
   async GetSearchQuery({ search }) {
-
     // Build search query
     const query = {};
     if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { content: { $regex: search, $options: "i" } },
-      ];
+      query.$or = [{ title: { $regex: search, $options: "i" } }, { content: { $regex: search, $options: "i" } }];
     }
 
     // Find documents and populate folder
-    const documents = await this.documentRep.DocumentSearchQuery( query )
-
+    const documents = await this.documentRep.DocumentSearchQuery(query);
 
     const results = await Promise.all(
       documents.map(async (doc) => {
@@ -46,9 +40,7 @@ class FolderHelper {
 
         while (currentFolder) {
           folderPath = currentFolder.name + (folderPath ? "/" + folderPath : "");
-          currentFolder = currentFolder.parentFolder
-            ? await Folder.findById(currentFolder.parentFolder)
-            : null;
+          currentFolder = currentFolder.parentFolder ? await Folder.findById(currentFolder.parentFolder) : null;
         }
 
         return {
@@ -59,9 +51,39 @@ class FolderHelper {
       })
     );
 
-
     return results;
+  }
 
+
+  async GetFolderDetails({ folderId, userId }) {
+
+    const subfolders = await this.repository.GetFolderDetails({ folderId, userId })
+
+    const documents = await this.documentRep.GetDocumentDetails({ folderId, userId })
+
+    const data = {
+      folderId,
+      subfolders: subfolders.map(f => ({ id: f._id, name: f.name })),
+      documents: documents.map(d => ({
+        id: d._id,
+        title: d.title,
+        content: d.content,
+      })),
+    }
+
+    return data;
+
+  }
+
+
+  async DeleteFolder({ folderId }) {
+    const childFolders = await this.helper.DeleteFolderAndChildren({ folderId })
+
+    for (const child of childFolders) {
+      await this.repository.DeleteFolder({ folderId: child._id })
+    }
+    
+    return await this.repository.DeleteFolder({ folderId })
   }
 }
 
