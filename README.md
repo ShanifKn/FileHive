@@ -1,4 +1,4 @@
-# 📦 File Management System – GitHub README
+# 📦 File Management System – FileHive
 
 ## 🧠 Overview
 A robust file management platform with full support for nested folders, document versioning, and user authentication. It is built using Node.js and Express, designed using a scalable microservices architecture.
