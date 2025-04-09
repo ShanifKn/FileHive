@@ -8,7 +8,7 @@ class VersionService {
       }
 
       async CreateVersion({ documentId, versionNumber, fileUrl }) {
-            return await this.repository.CreateVersion({ documentId, versionNumber, fileUrl })
+            return await this.helper.CreateVersion({ documentId, versionNumber, fileUrl })
       }
 
 

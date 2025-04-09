@@ -9,15 +9,9 @@ class FolderRepository {
             });
       }
 
-      async CountUserByFolder({ _id }) {
+      async CountByFolder({ _id }) {
             return await Folder.countDocuments({
                   _id,
-            });
-      }
-
-      async CountUserByFolderName({ name }) {
-            return await Folder.countDocuments({
-                  name,
             });
       }
 
@@ -31,11 +25,20 @@ class FolderRepository {
       }
 
 
+      async CountByFolderName({ name, parentFolder }) {
+            return await Folder.countDocuments({
+                  name,
+                  parentFolder: parentFolder ?? null,
+            });
+      }
+
+
+
       async GetUserFolder({ userId }) {
             return Folder.find({
                   createdBy: userId,
                   parentFolder: null,
-            });
+            }).select("-createdBy -createdAt -updatedAt -__v");
       }
 }
 

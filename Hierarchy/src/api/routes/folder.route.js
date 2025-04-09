@@ -1,9 +1,9 @@
-import FolderService from "../services/folder.service.js";
-import { tryCatch } from "../utils/index.js";
-import { Authentication } from "./middlewares/authentication.js";
-import FolderExist from "./validations/existCheck.js";
-import { SchemaValidationForFolder } from "./validations/schema.validation.js";
-import Validate from "./validations/validator.js";
+import FolderService from "../../services/folder.service.js";
+import { tryCatch } from "../../utils/index.js";
+import { Authentication } from "../middlewares/authentication.js";
+import FolderExist from "../validations/existCheck.js";
+import { SchemaValidationForFolder } from "../validations/schema.validation.js";
+import Validate from "../validations/validator.js";
 
 const FolderRouter = (app) => {
   const service = new FolderService();
@@ -33,7 +33,7 @@ const FolderRouter = (app) => {
 
       const userId = req.user._id;
 
-      await existCheck.ForFolderName({ name });
+      await existCheck.ForFolderName({ name, parentFolder });
 
       await existCheck.ForFolderParent({ _id: parentFolder });
 

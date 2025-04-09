@@ -20,10 +20,11 @@ const VersionRouter = (app) => {
             Validate,
             tryCatch(async (req, res) => {
 
-                  console.log(req.body)
+                  const { documentId, versionNumber, fileUrl } = req.body
 
+                  const data = await service.CreateVersion({ documentId, versionNumber, fileUrl })
 
-                  return res.status(200).json({ message: "Version uploaded", version });
+                  return res.status(200).json({ data });
             })
       );
 

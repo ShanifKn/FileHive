@@ -30,6 +30,9 @@ export const SchemaValidationForVersion = [
             .bail()
             .isURL({
                   require_protocol: true,
+                  require_tld: false, // Allow localhost
+                  allow_underscores: true,
+                  allow_protocol_relative_urls: true,
             })
             .withMessage("Invalid URL format")
 

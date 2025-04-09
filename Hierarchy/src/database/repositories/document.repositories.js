@@ -13,6 +13,13 @@ class DocumentRepository {
 
       }
 
+
+            async CountByDocument({ _id }) {
+                  return await Document.countDocuments({
+                        _id,
+                  });
+            }
+
 }
 
 

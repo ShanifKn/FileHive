@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const FolderSchema = new mongoose.Schema(
       {
-            name: { type: String, required: true, unique: true },
+            name: { type: String, required: true },
 
             parentFolder: { type: mongoose.Schema.Types.ObjectId, ref: "Folder", default: null },
 

@@ -8,19 +8,15 @@ const DB_URL = process.env.MONGODB_URI;
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWT_OPTIONS = {
-      issuer: process.env.JWT_ISSUER,
-      expiresIn: parseInt(process.env.JWT_EXPIRES),
-      audience: process.env.JWT_AUDIENCE,
-      subject: process.env.JWT_SUBJECT,
-};
+const BASE_URL = process.env.BASE_URL
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const IMAGE_BASE_URL = process.env.IMAGE_BASE_URL
 
 
 export {
       PORT,
       DB_URL,
-      JWT_OPTIONS,
-      JWT_SECRET, PRIVATE_KEY
+      BASE_URL,
+      JWT_SECRET,
+      IMAGE_BASE_URL
 };

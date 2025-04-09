@@ -4,7 +4,13 @@ export const FOLDER_NOT_FOUND = 2002;
 
 export const FOLDER_FOUND = 2003;
 
+
+export const VERSION_UPLOAD_FAIL = 2004;
+
+
 export const TOKEN_VERIFICATION_FAIL = 1007;
+
+
 
 
 export const TOKEN_NOT_FOUND = 1009;

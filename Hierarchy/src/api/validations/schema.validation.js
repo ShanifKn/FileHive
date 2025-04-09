@@ -49,7 +49,7 @@ export const SchemaValidationForDocument = [
 
 
       check("folder")
-            .optional()
+            .notEmpty()
             .custom((id) => {
                   if (!mongoose.isValidObjectId(id)) {
                         throw new AppError(INVALID_PARENT_ID, "Invalid Parent ID", 400);
