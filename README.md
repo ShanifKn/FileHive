@@ -37,6 +37,16 @@ $ docker compose up --build -d
 
 > 🌐 Access app at [http://localhost](http://localhost)
 
+### 🛠️ Manual Setup (Without Docker)
+If Docker is not installed, you can still run the project manually:
+
+```bash
+# Inside each microservice folder:
+$ cd user  # or hierarchy, version
+$ npm install
+$ npm run start
+```
+
 ---
 
 ## ⚙️ Setup Instructions
@@ -88,6 +98,24 @@ Allowed Types: jpeg, jpg, png, gif, webp, pdf, txt, doc, docx, xlsx, csv
 
 ---
 
+## 🛑 Centralized Error Handling
+
+A unified error-handling mechanism is implemented across all services.
+
+### 📌 Key Features:
+- All errors follow a consistent response format
+```json
+{
+  "message": "Resource not found",
+  "errorCode": 404
+}
+```
+- Common HTTP error types: `400`, `401`, `403`, `404`, `500`
+- Reduces boilerplate error-checking in route logic
+- Easier integration on the frontend for error display and toast notifications
+
+---
+
 ## 🚀 Features
 
 - 🔐 Secure Auth with JWT
@@ -106,21 +134,5 @@ Allowed Types: jpeg, jpg, png, gif, webp, pdf, txt, doc, docx, xlsx, csv
 - Auth-protected routes require `x-auth-token` header.
 - Full documentation available via Postman (JSON collection provided).
 
-### 🧪 API Categories
-- `POST /signup`, `POST /login` – Authentication
-- `POST/PUT/DELETE /folders` – Folder management
-- `POST/GET/PUT/DELETE /documents` – Document and version operations
-- `GET /filter` – Document search
 
----
-
-## 💬 Feedback & Contributions
-
-- Found a bug? Open an [issue](../../issues)
-- Want to improve? Submit a [pull request](../../pulls)
-- Looking for help? Raise a discussion or reach out
-
----
-
-🛠️ Made with **Node.js**, **MongoDB**, and ❤️ powered by **Docker** 🐳
 
